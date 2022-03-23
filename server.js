@@ -8,13 +8,13 @@ app.use(express.json());
 
 const users = [];
 
-app.get('/users', (req, res) => {
+app.get('/getUsers', (req, res) => {
     res.json(users);
 });
 
-app.post('/users', async (req, res) => {
+app.post('/addUser', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); // The second argument is the default value for generating salt. Password will be hashed using this salt
         const user = { name: req.body.name, password: hashedPassword };
         users.push(user);
         
@@ -26,7 +26,7 @@ app.post('/users', async (req, res) => {
 
 });
 
-app.post('/users/login', async (req, res) => {
+app.post('/user/login', async (req, res) => {
     const user = users.find(user => user.name === req.body.name);
 
     if (user == null) {
